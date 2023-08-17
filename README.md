@@ -1,27 +1,41 @@
-# Stage 1/4: A needle in the hay
+# Stage 2/4: Jumping bubbles
 ## Description
-Have you ever had to use one of those 2000-plus page phone books full of all kinds of organizations and people's names printed in a small font in multiple columns on each page? Finding the information you need in such books can be an ordeal. As a matter of fact, searching through huge data sets may be a challenging task for a computer, too.
+You have to iterate over each element of the number list every time you want to find someone's number. This is the only way to search if your list contains unordered data. The number you are looking for can be anywhere in the list, so you have to check every single element.
 
-In this project, you will create a phone book; you will implement several sorting and searching algorithms and compare their efficiency in dealing with a big dataset. For this, you will need to download <a href="https://stepik.org/media/attachments/lesson/197761/directory.txt">a file</a> that contains the phone numbers of over a million people in multiple cities.
+Now, let's try sorting the contents of the phone list and performing a different kind of search. Let's see if this search algorithm is more efficient.
 
 ## Objectives
-In this stage, you should implement the simplest possible search to find the numbers of a few people whose names are <a href="https://stepik.org/media/attachments/lesson/197761/find.txt">listed</a> in our .txt file. The data is randomly sorted, so we should use a <a href="https://hyperskill.org/learn/step/4970">Linear Search</a> to look through each of the directory entries until we find our target. While there may be faster ways to do this, avoid using optimizations like Maps in this stage - we'll get to optimizing in later stages.
+In this stage, you should sort the list of numbers alphabetically by the phone owner’s name. Sort the list using the <b>bubble sort</b> algorithm and search in the list using the <b>jump search</b> algorithm.
 
-It takes time to look through all the records in a big file. We recommend that you manually test your program with a simplified dataset: <a href="https://stepik.org/media/attachments/lesson/210117/small_directory.txt">small_directory.txt</a> and <a href="https://stepik.org/media/attachments/lesson/210117/small_find.txt">small_find.txt</a>. However, to pass all the tests, you will have to work with the big files mentioned above.
+After sorting, search for 500 phone numbers using the list from the previous stage. Note how long it takes to sort the list and measure the time the program spends searching. Don't include the sorting time in the searching time because the list of numbers stays sorted after every search request. If you want to save the sorted list in a file so you don’t have to sort it again, do not overwrite the file that contains the unsorted list of phone numbers. This file will also be required in the next stage.
 
-Note how long it takes you to do the task with linear search so that you can compare the results with those of other search methods.
+If the sorting process takes too long (more than 10 times longer than all 500 iterations of the linear search), you should stop sorting and use linear search.
 
-To measure the time difference, you can use `System.currentTimeMillis()`.
+Output both search approaches one after another and see which one is faster.
 
-Also notice that you don't need to read the file "directory.txt" again and again after each query. You should load all its lines into memory and measure only the search process.
+Look at the examples to see what your output should look like.
 
-Your program should output a message to show it has started searching, followed by a message stating how many entries out of the total number of targets in find.txt you were able to find along with the time taken to search for those entries (see example below).
+## Examples
+Output examples are shown below. Note that you can get totally different sorting and searching times!
 
-> Please do not keep the downloaded files inside your project directory because the server may reject large files and you will see the message <b>"Failed to post submission to the Hyperskill"</b>.
-
-## Example
-Below is an example of what your output should look like (in this case, find.txt contained 500 entries and all 500 were found in the directory with the search taking 1 minute, 56 seconds, and 328 milliseconds):
+<b>Example 1:</b>
 ```
-Start searching...
+Start searching (linear search)...
 Found 500 / 500 entries. Time taken: 1 min. 56 sec. 328 ms.
+
+Start searching (bubble sort + jump search)...
+Found 500 / 500 entries. Time taken: 9 min. 15 sec. 291 ms.
+Sorting time: 8 min. 45 sec. 251 ms.
+Searching time: 0 min. 30 sec. 40 ms.
+```
+
+<b>Example 2:</b>
+```
+Start searching (linear search)...
+Found 500 / 500 entries. Time taken: 2 min. 01 sec. 134 ms.
+
+Start searching (bubble sort + jump search)...
+Found 500 / 500 entries. Time taken: 22 min. 14 sec. 482 ms.
+Sorting time: 20 min. 12 sec. 251 ms. - STOPPED, moved to linear search
+Searching time: 2 min. 02 sec. 231 ms.
 ```
