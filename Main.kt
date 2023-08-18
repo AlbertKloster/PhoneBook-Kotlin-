@@ -3,7 +3,6 @@ package phonebook
 import phonebook.Constants.Companion.DIRECTORY
 import phonebook.Constants.Companion.FIND
 
-
 fun main() {
     val database = Database(DIRECTORY)
     val searchList = FileHandler.readNames(FIND)
@@ -14,25 +13,49 @@ fun main() {
     val finishTimeLinear = System.currentTimeMillis()
     printResult(startTimeLinear, finishTimeLinear, foundEntriesLinear, searchList)
 
+
+
     println("\nStart searching (bubble sort + jump search)...")
     val bubbleSorter = BubbleSorter()
     val startTimeBubble = System.currentTimeMillis()
-    var stopped = false
-    val sortedEntries = try {
+    var bubbleStopped = false
+    val bubbleSortedEntries = try {
         bubbleSorter.sort(database.data, (finishTimeLinear - startTimeLinear) * 10)
     } catch (e: RuntimeException) {
-        stopped = true
+        bubbleStopped = true
         emptyList()
     }
     val finishTimeBubble = System.currentTimeMillis()
 
     val startTimeSearch = System.currentTimeMillis()
-    val foundEntries = if (stopped) searchByList(LinearSearcher(), database.data, searchList) else searchByList(JumpSearcher(), sortedEntries, searchList)
+    val foundEntries = if (bubbleStopped) searchByList(LinearSearcher(), database.data, searchList) else searchByList(JumpSearcher(), bubbleSortedEntries, searchList)
     val finishTimeSearch = System.currentTimeMillis()
 
     printResult(startTimeBubble, finishTimeSearch, foundEntries, searchList)
-    println("Sorting time: ${parseTime(finishTimeBubble - startTimeBubble) + if (stopped) " - STOPPED, moved to linear search" else ""}")
+    println("Sorting time: ${parseTime(finishTimeBubble - startTimeBubble) + if (bubbleStopped) " - STOPPED, moved to linear search" else ""}")
     println("Searching time: ${parseTime(finishTimeSearch - startTimeSearch)}")
+
+
+
+    println("\nStart searching (quick sort + binary search)...")
+    val quickSorter = QuickSorter()
+    val startTimeQuick = System.currentTimeMillis()
+    var quickStopped = false
+    val quickSortedEntries = try {
+        quickSorter.sort(database.data, (finishTimeLinear - startTimeLinear) * 10)
+    } catch (e: RuntimeException) {
+        quickStopped = true
+        emptyList()
+    }
+    val finishTimeQuick = System.currentTimeMillis()
+
+    val startTimeSearchQuickBin = System.currentTimeMillis()
+    val foundEntriesQuickBin = if (quickStopped) searchByList(LinearSearcher(), database.data, searchList) else searchByList(BinarySearcher(), quickSortedEntries, searchList)
+    val finishTimeSearchQuickBin = System.currentTimeMillis()
+
+    printResult(startTimeQuick, finishTimeSearchQuickBin, foundEntriesQuickBin, searchList)
+    println("Sorting time: ${parseTime(finishTimeQuick - startTimeQuick) + if (quickStopped) " - STOPPED, moved to linear search" else ""}")
+    println("Searching time: ${parseTime(finishTimeSearchQuickBin - startTimeSearchQuickBin)}")
 
 }
 
