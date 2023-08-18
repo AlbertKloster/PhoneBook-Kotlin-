@@ -57,6 +57,31 @@ fun main() {
     println("Sorting time: ${parseTime(finishTimeQuick - startTimeQuick) + if (quickStopped) " - STOPPED, moved to linear search" else ""}")
     println("Searching time: ${parseTime(finishTimeSearchQuickBin - startTimeSearchQuickBin)}")
 
+
+    println("\nStart searching (hash table)...")
+    val startTimeCreatingHash = System.currentTimeMillis()
+
+    val hashMap = database.data.associate { it.name to it.phoneNumber }
+
+    val finishCreatingHash = System.currentTimeMillis()
+
+    val startTimeSearchHash = System.currentTimeMillis()
+    val foundEntriesHashMap = findAll(hashMap, searchList)
+    val finishTimeSearchHash = System.currentTimeMillis()
+
+    printResult(startTimeCreatingHash, finishTimeSearchHash, foundEntriesHashMap, searchList)
+    println("Creating time: ${parseTime(finishCreatingHash - startTimeCreatingHash)}")
+    println("Searching time: ${parseTime(finishTimeSearchHash - startTimeSearchHash)}")
+}
+
+private fun findAll(hashMap: Map<String, String>, list: List<String>): List<Entry> {
+    val foundEntries = mutableListOf<Entry>()
+    list.forEach {
+        val phoneNumber = hashMap[it]
+        if (phoneNumber != null)
+            foundEntries.add(Entry(phoneNumber, it))
+    }
+    return foundEntries
 }
 
 private fun printResult(startTime: Long, finishTime: Long, foundEntries: List<Entry>, searchList: List<String>) {

@@ -1,13 +1,13 @@
-# Stage 3/4: Need for speed
+# Stage 4/4: Instant search
 ## Description
-Now, let's use even faster methods to sort the list of numbers and to search in the list. In this stage, we will compare the efficiency of all three approaches.
+The search is pretty fast, but is it possible to come up with something even faster? Let's try an algorithm with better complexity.
 
 ## Objectives
-Like in the previous stage, you should first sort the list of phone numbers by the owner’s name and then search for the numbers of the 500 people from the list given in the first stage. Remember: to get decent and comparable results, you should put all the algorithms in the same initial conditions.
+In the previous stage, you prepared the data using an algorithm with the complexity of `O(n log n)` and found the data using an algorithm with the complexity of `O(log n)`. In this stage, you will implement faster data preparation and a faster search. The preparation will have the complexity of `O(n)`, and the search, the complexity of `O(1)`. A <b>hash table</b> will help you with this.
 
-For sorting, use the quick sort algorithm, and for searching, the binary search algorithm.
+You need to add all the elements to the hash table and then find the necessary phone numbers, like in the previous stages. Since the hash table is filled once, you need to measure the hash table creation time separately (just like you did with sorting in the previous stage).
 
-Output all three approaches one after another and see which one is faster.
+Output all four approaches one after another and see which one is faster.
 
 ## Examples
 An output example is shown below. Note that you can get totally different sorting and searching times!
@@ -24,4 +24,9 @@ Start searching (quick sort + binary search)...
 Found 500 / 500 entries. Time taken: 1 min. 21 sec. 996 ms.
 Sorting time: 1 min. 17 sec. 381 ms.
 Searching time: 0 min. 4 sec. 615 ms.
+
+Start searching (hash table)...
+Found 500 / 500 entries. Time taken: 0 min. 4 sec. 256 ms.
+Creating time: 0 min. 4 sec. 121 ms.
+Searching time: 0 min. 0 sec. 135 ms.
 ```
